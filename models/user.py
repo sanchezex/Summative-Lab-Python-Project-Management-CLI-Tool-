@@ -20,6 +20,22 @@ class User(Person):
     def __repr__(self):
         return f"User(id={self.id}, name={self.name!r}, email={self.email!r})"
 
+    def add_project(self, project_id: int) -> None:
+        """Add a project to user's project list."""
+        if project_id not in self.project_ids:
+            self.project_ids.append(project_id)
+
+    def remove_project(self, project_id: int) -> bool:
+        """Remove a project from user's project list. Returns True if removed."""
+        if project_id in self.project_ids:
+            self.project_ids.remove(project_id)
+            return True
+        return False
+
+    def get_project_count(self) -> int:
+        """Get the number of projects owned by this user."""
+        return len(self.project_ids)
+
     def to_dict(self):
         d = super().to_dict()
         d.update({"id": self.id, "project_ids": self.project_ids})
